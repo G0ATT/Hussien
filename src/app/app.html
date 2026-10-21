@@ -1,0 +1,473 @@
+<div class="min-h-screen flex flex-col bg-slate-50 text-slate-800 font-sans antialiased">
+  
+  <!-- Navigation Header Bar -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-xl border-b border-slate-200/80 shadow-xs transition-all">
+    
+    <!-- Top Luxury Jewel Accent Line -->
+    <div class="h-0.5 bg-gradient-to-r from-emerald-800 via-amber-400 to-emerald-800 w-full"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20 gap-4">
+        
+        <!-- Brand & Emblem (Right in RTL) -->
+        <a routerLink="/dashboard" (click)="closeMobileMenu()" class="flex items-center gap-3 group shrink-0">
+          <!-- Luxury Emerald/Amber Seal Logo -->
+          <div class="relative w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-950 p-[1.5px] shadow-md shadow-emerald-950/20 group-hover:scale-105 transition-transform duration-300">
+            <div class="w-full h-full rounded-[14px] bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 flex items-center justify-center border border-amber-400/30">
+              <span class="font-serif font-black text-amber-400 text-xl drop-shadow-sm select-none">ح</span>
+            </div>
+            <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-amber-400 rounded-full border-2 border-white shadow-2xs"></span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-base sm:text-lg font-black tracking-tight text-slate-900 group-hover:text-emerald-800 transition-colors">
+                عائلة بيت حسين
+              </span>
+              <span class="px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200/70 text-[10px] font-extrabold shadow-2xs">
+                الصندوق العائلي
+              </span>
+            </div>
+            <p class="text-[11px] text-slate-400 font-medium leading-none mt-1">
+              نظام إدارة الصندوق والمساهمات المباركة
+            </p>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links (Center) -->
+        <nav class="hidden lg:flex items-center gap-1 bg-slate-100/90 p-1.5 rounded-2xl border border-slate-200/70 shadow-inner">
+          <a
+            routerLink="/dashboard"
+            routerLinkActive="bg-white text-emerald-800 font-bold shadow-xs ring-1 ring-slate-900/5"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="px-3.5 py-2 rounded-xl text-xs sm:text-sm text-slate-600 hover:text-slate-900 hover:bg-white/60 transition-all flex items-center gap-2 font-medium"
+          >
+            <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+            </svg>
+            <span>لوحة التحكم</span>
+          </a>
+
+          <a
+            routerLink="/funds"
+            routerLinkActive="bg-white text-emerald-800 font-bold shadow-xs ring-1 ring-slate-900/5"
+            class="px-3.5 py-2 rounded-xl text-xs sm:text-sm text-slate-600 hover:text-slate-900 hover:bg-white/60 transition-all flex items-center gap-2 font-medium"
+          >
+            <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+            <span>الجمعيات والمساهمات</span>
+          </a>
+
+          <a
+            routerLink="/members"
+            routerLinkActive="bg-white text-emerald-800 font-bold shadow-xs ring-1 ring-slate-900/5"
+            class="px-3.5 py-2 rounded-xl text-xs sm:text-sm text-slate-600 hover:text-slate-900 hover:bg-white/60 transition-all flex items-center gap-2 font-medium"
+          >
+            <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <span>أفراد العائلة</span>
+          </a>
+
+          <a
+            routerLink="/payments"
+            routerLinkActive="bg-white text-emerald-800 font-bold shadow-xs ring-1 ring-slate-900/5"
+            class="px-3.5 py-2 rounded-xl text-xs sm:text-sm text-slate-600 hover:text-slate-900 hover:bg-white/60 transition-all flex items-center gap-2 font-medium"
+          >
+            <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+            </svg>
+            <span>سجل الدفعات</span>
+          </a>
+        </nav>
+
+        <!-- Right Quick Actions & Authentication (Left in RTL) -->
+        <div class="hidden sm:flex items-center gap-2.5">
+          
+          <!-- Audit Logs & Trash Button -->
+          <button
+            id="nav-logs-btn"
+            (click)="openLogs()"
+            class="relative px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200 hover:border-slate-300 text-xs font-bold transition-all shadow-2xs flex items-center gap-2 cursor-pointer"
+            title="سجل العمليات والـ Logs وسلة المحذوفات"
+          >
+            <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+            <span>السجلات والمحذوفات</span>
+            <span *ngIf="trashCount() > 0" class="inline-flex items-center justify-center min-w-5 h-5 px-1.5 rounded-full text-[10px] bg-rose-600 text-white font-black shadow-xs animate-pulse">
+              {{ trashCount() }}
+            </span>
+          </button>
+
+          <!-- Users Management Button (Admin Only) -->
+          <button
+            *ngIf="isAdmin()"
+            id="nav-users-btn"
+            (click)="openUsersModal()"
+            class="px-3.5 py-2 rounded-xl bg-white hover:bg-emerald-50 text-emerald-800 hover:text-emerald-950 border border-emerald-200 hover:border-emerald-300 text-xs font-bold transition-all shadow-2xs flex items-center gap-2 cursor-pointer"
+            title="إدارة المستخدمين والمشرفين"
+          >
+            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <span>المستخدمين</span>
+          </button>
+
+
+          <!-- If Logged In: Modern Executive Profile Card -->
+          <ng-container *ngIf="isLoggedIn(); else guestTpl">
+            <div id="user-profile-badge" class="flex items-center gap-2.5 p-1.5 pr-2.5 rounded-2xl bg-white border border-slate-200 shadow-2xs">
+              
+              <!-- Avatar with online indicator -->
+              <div class="relative shrink-0">
+                <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-800 via-emerald-700 to-teal-700 text-white flex items-center justify-center text-xs font-black shadow-xs">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
+                <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-white"></span>
+              </div>
+
+              <!-- Name & Role -->
+              <div class="text-right leading-tight">
+                <span class="text-xs font-black text-slate-800 block truncate max-w-[150px]">
+                  {{ currentUser()?.fullName }}
+                </span>
+                <span class="text-[10px] text-emerald-700 font-bold block mt-0.5">
+                  {{ currentUser()?.role }}
+                </span>
+              </div>
+
+              <!-- Separator -->
+              <div class="h-6 w-px bg-slate-200 mx-0.5"></div>
+
+              <!-- Logout Button with Clean SVG -->
+              <button
+                id="nav-logout-btn"
+                (click)="logout()"
+                title="تسجيل الخروج"
+                class="p-1.5 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer group"
+                aria-label="تسجيل الخروج"
+              >
+                <svg class="w-4 h-4 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- Add Payment CTA -->
+            <button
+              id="nav-record-payment-btn"
+              (click)="openPaymentModal()"
+              class="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-emerald-600 via-emerald-700 to-emerald-800 hover:from-emerald-700 hover:to-emerald-900 text-white font-bold text-xs shadow-md shadow-emerald-800/20 hover:shadow-lg hover:shadow-emerald-800/30 transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer border border-emerald-500/20"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+              <span>تسجيل دفعة</span>
+            </button>
+          </ng-container>
+
+          <!-- If Guest / Visitor -->
+          <ng-template #guestTpl>
+            <button
+              id="nav-login-btn"
+              (click)="openLogin()"
+              class="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-slate-950 font-black text-xs shadow-md shadow-amber-500/20 transition-all flex items-center gap-2 cursor-pointer border border-amber-400/40"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              <span>تسجيل الدخول (مشرف)</span>
+            </button>
+          </ng-template>
+
+        </div>
+
+        <!-- Mobile Menu Hamburger Button -->
+        <div class="flex items-center lg:hidden">
+          <button
+            (click)="toggleMobileMenu()"
+            class="p-2.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+            aria-label="القائمة الرئيسية"
+          >
+            <span class="text-lg font-bold">{{ mobileMenuOpen() ? '✕' : '☰' }}</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- Mobile Drawer Menu -->
+    <div
+      *ngIf="mobileMenuOpen()"
+      class="lg:hidden border-t border-slate-200 bg-white/98 backdrop-blur-xl px-4 pt-3 pb-6 space-y-2 shadow-xl animate-in slide-in-from-top-4 duration-200"
+    >
+      <!-- Mobile User Status -->
+      <div *ngIf="isLoggedIn()" class="p-3 mb-2 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-800 to-teal-700 text-white flex items-center justify-center font-bold text-xs shadow-xs">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <div>
+            <span class="text-xs font-black text-slate-800 block">{{ currentUser()?.fullName }}</span>
+            <span class="text-[10px] text-emerald-700 font-bold">{{ currentUser()?.role }}</span>
+          </div>
+        </div>
+        <button
+          (click)="logout()"
+          class="px-3 py-1.5 rounded-xl bg-rose-50 text-rose-600 hover:bg-rose-100 font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+        >
+          <span>خروج</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+        </button>
+      </div>
+
+      <div *ngIf="!isLoggedIn()" class="pb-2">
+        <button
+          (click)="openLogin()"
+          class="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black text-xs flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+          <span>تسجيل الدخول (مشرف)</span>
+        </button>
+      </div>
+
+      <a
+        routerLink="/dashboard"
+        (click)="closeMobileMenu()"
+        routerLinkActive="bg-emerald-50 text-emerald-800 font-bold"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="flex items-center gap-2.5 px-4 py-3 rounded-xl text-sm text-slate-700 hover:bg-slate-50 transition-colors font-medium"
+      >
+        <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+        </svg>
+        <span>لوحة التحكم والإحصائيات</span>
+      </a>
+
+      <a
+        routerLink="/funds"
+        (click)="closeMobileMenu()"
+        routerLinkActive="bg-emerald-50 text-emerald-800 font-bold"
+        class="flex items-center gap-2.5 px-4 py-3 rounded-xl text-sm text-slate-700 hover:bg-slate-50 transition-colors font-medium"
+      >
+        <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+        </svg>
+        <span>الجمعيات والمساهمات</span>
+      </a>
+
+      <a
+        routerLink="/members"
+        (click)="closeMobileMenu()"
+        routerLinkActive="bg-emerald-50 text-emerald-800 font-bold"
+        class="flex items-center gap-2.5 px-4 py-3 rounded-xl text-sm text-slate-700 hover:bg-slate-50 transition-colors font-medium"
+      >
+        <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        <span>أفراد العائلة</span>
+      </a>
+
+      <a
+        routerLink="/payments"
+        (click)="closeMobileMenu()"
+        routerLinkActive="bg-emerald-50 text-emerald-800 font-bold"
+        class="flex items-center gap-2.5 px-4 py-3 rounded-xl text-sm text-slate-700 hover:bg-slate-50 transition-colors font-medium"
+      >
+        <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+        </svg>
+        <span>سجل الدفعات والإيصالات</span>
+      </a>
+
+      <button
+        (click)="openLogs()"
+        class="w-full text-right px-4 py-3 rounded-xl text-sm text-slate-700 hover:bg-slate-50 transition-colors flex items-center justify-between font-medium cursor-pointer"
+      >
+        <div class="flex items-center gap-2.5">
+          <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+          <span>سجل العمليات والـ Logs والمحذوفات</span>
+        </div>
+        <span *ngIf="trashCount() > 0" class="px-2 py-0.5 rounded-full bg-rose-600 text-white text-xs font-bold animate-pulse">
+          {{ trashCount() }}
+        </span>
+      </button>
+
+      <!-- Admin Users in Mobile Menu -->
+      <button
+        *ngIf="isAdmin()"
+        id="mobile-nav-users-btn"
+        (click)="openUsersModal()"
+        class="w-full text-right px-4 py-3 rounded-xl text-sm text-emerald-900 bg-emerald-50/70 hover:bg-emerald-100/70 transition-colors flex items-center justify-between font-bold cursor-pointer"
+      >
+        <div class="flex items-center gap-2.5">
+          <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <span>إدارة المستخدمين والمشرفين</span>
+        </div>
+      </button>
+
+      <div class="pt-2" *ngIf="isLoggedIn()">
+        <button
+          (click)="openPaymentModal()"
+          class="w-full py-3 rounded-2xl bg-gradient-to-r from-emerald-600 via-emerald-700 to-emerald-800 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+          <span>تسجيل دفعة جديدة</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main View Area -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-8 pb-24 lg:pb-8">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Mobile Floating Bottom Navigation Bar (Visible on mobile/tablet) -->
+  <nav class="mobile-bottom-nav">
+    <a
+      routerLink="/dashboard"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="mobile-nav-item"
+    >
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+      </svg>
+      <span>الرئيسية</span>
+    </a>
+
+    <a
+      routerLink="/funds"
+      routerLinkActive="active"
+      class="mobile-nav-item"
+    >
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+      </svg>
+      <span>الجمعيات</span>
+    </a>
+
+    <!-- Center Quick Action Button -->
+    <div class="-mt-5">
+      <button
+        *ngIf="isLoggedIn()"
+        (click)="openPaymentModal()"
+        class="w-12 h-12 rounded-full bg-gradient-to-tr from-emerald-600 via-emerald-700 to-teal-800 text-white flex items-center justify-center shadow-lg shadow-emerald-700/40 active:scale-90 transition-transform cursor-pointer border-2 border-white"
+        title="تسجيل دفعة سريعة"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
+        </svg>
+      </button>
+
+      <button
+        *ngIf="!isLoggedIn()"
+        (click)="openLogin()"
+        class="w-12 h-12 rounded-full bg-gradient-to-tr from-amber-500 to-amber-600 text-slate-950 flex items-center justify-center shadow-lg shadow-amber-500/30 active:scale-90 transition-transform cursor-pointer border-2 border-white"
+        title="تسجيل الدخول"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+      </button>
+    </div>
+
+    <a
+      routerLink="/members"
+      routerLinkActive="active"
+      class="mobile-nav-item"
+    >
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+      </svg>
+      <span>الأفراد</span>
+    </a>
+
+    <a
+      routerLink="/payments"
+      routerLinkActive="active"
+      class="mobile-nav-item"
+    >
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+      </svg>
+      <span>الدفعات</span>
+    </a>
+  </nav>
+
+  <!-- Footer -->
+  <footer class="mt-auto bg-slate-900 text-slate-300 border-t border-slate-800 pb-16 lg:pb-0">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        
+        <div class="flex items-center gap-3.5">
+          <div class="w-10 h-10 rounded-xl bg-emerald-700 flex items-center justify-center text-amber-300 font-bold text-lg">
+            ح
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-white">نظام إدارة صندوق ومساهمات عائلة بيت حسين</h4>
+            <p class="text-xs text-slate-400 mt-0.5">
+              يداً بيد لرفعة وتكافل أبناء العائلة ومشاريعها المباركة
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-6 text-xs text-slate-400">
+          <a routerLink="/dashboard" class="hover:text-emerald-400 transition-colors">لوحة التحكم</a>
+          <a routerLink="/funds" class="hover:text-emerald-400 transition-colors">الجمعيات</a>
+          <a routerLink="/members" class="hover:text-emerald-400 transition-colors">أفراد العائلة</a>
+          <a routerLink="/payments" class="hover:text-emerald-400 transition-colors">سجل الدفعات</a>
+        </div>
+
+        <div class="text-xs text-slate-500 font-medium text-center md:text-left">
+          صُمم بعناية وتطوير بأحدث تقنيات الويب • Angular & ASP.NET 9
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- Global Payment Modal -->
+  <app-payment-modal
+    *ngIf="showGlobalPaymentModal()"
+    (saved)="onPaymentSaved()"
+    (closed)="showGlobalPaymentModal.set(false)"
+  ></app-payment-modal>
+
+  <!-- Login Modal -->
+  <app-login-modal
+    *ngIf="showLoginModal()"
+    (loggedIn)="api.refreshTrashSummary()"
+    (closed)="showLoginModal.set(false)"
+  ></app-login-modal>
+
+  <!-- Audit Logs & Trash Modal -->
+  <app-audit-logs-modal
+    *ngIf="showLogsModal()"
+    (closed)="showLogsModal.set(false)"
+  ></app-audit-logs-modal>
+
+  <!-- Users Management Modal (Admin Only) -->
+  <app-users-modal
+    *ngIf="showUsersModal()"
+    (closed)="showUsersModal.set(false)"
+  ></app-users-modal>
+
+</div>
