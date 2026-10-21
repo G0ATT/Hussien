@@ -198,3 +198,32 @@ export interface TrashSummary {
   deletedFunds: TrashItem[];
   totalDeletedCount: number;
 }
+
+export interface DriveBackupFile {
+  id: string;
+  name: string;
+  createdTime?: string;
+  size?: number;
+  sizeFormatted: string;
+  webViewLink?: string;
+}
+
+export interface BackupResult {
+  success: boolean;
+  message: string;
+  fileId?: string;
+  fileName?: string;
+  fileSizeFormatted?: string;
+  timestamp: string;
+  triggerType: string;
+}
+
+export interface BackupStatus {
+  configured: boolean;
+  folderId: string;
+  folderLink: string;
+  intervalHours: number;
+  maxBackupsToKeep: number;
+  serviceAccountEmail: string;
+}
+

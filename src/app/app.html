@@ -114,6 +114,18 @@
             <span>المستخدمين</span>
           </button>
 
+          <!-- Cloud Backup Button (Admin Only) -->
+          <button
+            *ngIf="isAdmin()"
+            id="nav-backup-btn"
+            (click)="openBackupModal()"
+            class="px-3.5 py-2 rounded-xl bg-white hover:bg-emerald-50 text-emerald-800 hover:text-emerald-950 border border-emerald-200 hover:border-emerald-300 text-xs font-bold transition-all shadow-2xs flex items-center gap-1.5 cursor-pointer"
+            title="النسخ الاحتياطي و Google Drive"
+          >
+            <span class="text-xs">☁️</span>
+            <span>النسخ السحابي</span>
+          </button>
+
 
           <!-- If Logged In: Modern Executive Profile Card -->
           <ng-container *ngIf="isLoggedIn(); else guestTpl">
@@ -320,6 +332,19 @@
         </div>
       </button>
 
+      <!-- Admin Backup in Mobile Menu -->
+      <button
+        *ngIf="isAdmin()"
+        id="mobile-nav-backup-btn"
+        (click)="openBackupModal()"
+        class="w-full text-right px-4 py-3 rounded-xl text-sm text-emerald-900 bg-emerald-50/70 hover:bg-emerald-100/70 transition-colors flex items-center justify-between font-bold cursor-pointer"
+      >
+        <div class="flex items-center gap-2.5">
+          <span class="text-base">☁️</span>
+          <span>النسخ الاحتياطي و Google Drive</span>
+        </div>
+      </button>
+
       <div class="pt-2" *ngIf="isLoggedIn()">
         <button
           (click)="openPaymentModal()"
@@ -469,5 +494,11 @@
     *ngIf="showUsersModal()"
     (closed)="showUsersModal.set(false)"
   ></app-users-modal>
+
+  <!-- Backup & Google Drive Modal (Admin Only) -->
+  <app-backup-modal
+    *ngIf="showBackupModal()"
+    (closed)="showBackupModal.set(false)"
+  ></app-backup-modal>
 
 </div>

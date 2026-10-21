@@ -19,7 +19,10 @@ import {
   LoginResponse,
   AuditLog,
   TrashSummary,
-  TrashItem
+  TrashItem,
+  DriveBackupFile,
+  BackupResult,
+  BackupStatus
 } from '../models/gam3ya.models';
 
 import { environment } from '../../environments/environment';
@@ -44,6 +47,7 @@ export class ApiService {
   showLoginModal = signal<boolean>(false);
   showLogsModal = signal<boolean>(false);
   showUsersModal = signal<boolean>(false);
+  showBackupModal = signal<boolean>(false);
 
   // Trash State
   trashSummary = signal<TrashSummary>({
@@ -535,4 +539,41 @@ export class ApiService {
       paymentHistory: payments
     };
   }
+
+  // ==========================================
+  // BACKUP & GOOGLE DRIVE
+  // ==========================================
+  openBackupModal() {
+    if (!this.isLoggedIn()) {
+      this.promptLogin();
+      return;
+    }
+    this.showBackupModal.set(true);
+  }
+
+  getBackupStatus(): Observable<BackupStatus> {
+    return this.http.get<BackupStatus>(`${this.apiUrl}/backup/status`, this.getAuthHeaders());
+  }
+
+  uploadBackupToDrive(): Observable<BackupResult> {
+    return this.http.post<BackupResult>(`${this.apiUrl}/backup/upload-now`, {}, this.getAuthHeaders());
+  }
+
+  getDriveBackups(): Observable<DriveBackupFile[]> {
+    return this.http.get<DriveBackupFile[]>(`${this.apiUrl}/backup/drive-list`, this.getAuthHeaders()).pipe(
+      catchError(err => {
+        console.warn('Error fetching drive backups:', err);
+        return of([]);
+      })
+    );
+  }
+
+  downloadBackupFile(): Observable<Blob> {
+    const t = this.token();
+    return this.http.get(`${this.apiUrl}/backup/download`, {
+      headers: t ? { Authorization: `Bearer ${t}` } : {},
+      responseType: 'blob'
+    });
+  }
 }
+

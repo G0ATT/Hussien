@@ -5,6 +5,7 @@ import { PaymentModalComponent } from './components/payment-modal.component';
 import { LoginModalComponent } from './components/login-modal.component';
 import { AuditLogsModalComponent } from './components/audit-logs-modal.component';
 import { UsersModalComponent } from './components/users-modal.component';
+import { BackupModalComponent } from './components/backup-modal.component';
 import { ApiService } from './services/api.service';
 
 @Component({
@@ -18,7 +19,8 @@ import { ApiService } from './services/api.service';
     PaymentModalComponent,
     LoginModalComponent,
     AuditLogsModalComponent,
-    UsersModalComponent
+    UsersModalComponent,
+    BackupModalComponent
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
@@ -35,6 +37,7 @@ export class App {
   showLoginModal = this.api.showLoginModal;
   showLogsModal = this.api.showLogsModal;
   showUsersModal = this.api.showUsersModal;
+  showBackupModal = this.api.showBackupModal;
   trashCount = computed(() => this.api.trashSummary()?.totalDeletedCount || 0);
 
   toggleMobileMenu() {
@@ -47,6 +50,11 @@ export class App {
 
   openUsersModal() {
     this.showUsersModal.set(true);
+    this.closeMobileMenu();
+  }
+
+  openBackupModal() {
+    this.showBackupModal.set(true);
     this.closeMobileMenu();
   }
 

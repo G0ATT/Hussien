@@ -7,6 +7,7 @@ import { FundSummary, FundMemberContribution } from '../models/gam3ya.models';
 import { PaymentModalComponent } from '../components/payment-modal.component';
 import { AssignMemberModalComponent } from '../components/assign-member-modal.component';
 import { ConfirmModalComponent, ConfirmDetailItem } from '../components/confirm-modal.component';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-fund-detail',
@@ -74,6 +75,21 @@ import { ConfirmModalComponent, ConfirmDetailItem } from '../components/confirm-
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
               </svg>
               <span>ربط عضو</span>
+            </button>
+
+            <!-- Download Excel Report Button -->
+            <button
+              id="export-fund-excel-btn"
+              (click)="exportExcel()"
+              [disabled]="exportingExcel()"
+              class="flex-1 sm:flex-initial px-4 py-2.5 rounded-2xl bg-white hover:bg-emerald-50 text-emerald-800 border border-emerald-300 font-bold text-xs shadow-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 disabled:opacity-60"
+              title="تحميل كشف الجمعية بصيغة Excel (المشاركون + الدفعات في Sheets منفصلة)"
+            >
+              <span *ngIf="exportingExcel()" class="animate-spin text-sm">⏳</span>
+              <svg *ngIf="!exportingExcel()" class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <span>{{ exportingExcel() ? 'جاري تجهيز Excel...' : 'تحميل كشف Excel' }}</span>
             </button>
 
             <button
@@ -445,6 +461,7 @@ export class FundDetailComponent implements OnInit {
   showPaymentModal = signal<boolean>(false);
   showAssignModal = signal<boolean>(false);
   showDeleteFundConfirm = signal<boolean>(false);
+  exportingExcel = signal<boolean>(false);
   modalMemberId = signal<number | undefined>(undefined);
   modalAmount = signal<number | undefined>(undefined);
 
@@ -612,4 +629,132 @@ export class FundDetailComponent implements OnInit {
       default: return '⚠️';
     }
   }
+
+  exportExcel() {
+    const f = this.fund();
+    if (!f) return;
+
+    this.exportingExcel.set(true);
+
+    // Fetch payments for this fund to guarantee complete up-to-date data
+    this.api.getPayments(f.id).subscribe({
+      next: (payments) => {
+        this.exportingExcel.set(false);
+
+        const contributions = this.contributions();
+
+        // 1. Sheet 1: Participants and Contributions
+        const membersRows = contributions.map((item, index) => ({
+          'م': index + 1,
+          'اسم المشارك': item.memberName,
+          'رقم الهاتف': item.memberPhone || 'غير مسجل',
+          'المبلغ المطلوب (ج.م)': item.targetAmount,
+          'المبلغ المدفوع (ج.م)': item.totalPaid,
+          'المتبقي (ج.م)': item.remainingBalance,
+          'الزيادة (ج.م)': item.extraAmount,
+          'حالة السداد': item.status,
+          'عدد الدفعات': item.paymentsCount,
+          'تاريخ الانضمام': item.joinedAt ? new Date(item.joinedAt).toLocaleDateString('ar-EG') : '-'
+        }));
+
+        // Add Summary row to Sheet 1
+        if (contributions.length > 0) {
+          const totalTarget = contributions.reduce((sum, c) => sum + (c.targetAmount || 0), 0);
+          const totalPaid = contributions.reduce((sum, c) => sum + (c.totalPaid || 0), 0);
+          const totalRemaining = contributions.reduce((sum, c) => sum + (c.remainingBalance || 0), 0);
+          const totalExtra = contributions.reduce((sum, c) => sum + (c.extraAmount || 0), 0);
+
+          membersRows.push({
+            'م': 'الإجمالي' as any,
+            'اسم المشارك': `${contributions.length} مشارك`,
+            'رقم الهاتف': '-',
+            'المبلغ المطلوب (ج.م)': totalTarget,
+            'المبلغ المدفوع (ج.م)': totalPaid,
+            'المتبقي (ج.م)': totalRemaining,
+            'الزيادة (ج.م)': totalExtra,
+            'حالة السداد': f.status,
+            'عدد الدفعات': contributions.reduce((sum, c) => sum + (c.paymentsCount || 0), 0),
+            'تاريخ الانضمام': '-'
+          });
+        }
+
+        // 2. Sheet 2: Payments / Receipts
+        const paymentsList = payments || [];
+        const paymentsRows = paymentsList.map((p, index) => ({
+          'م': index + 1,
+          'رقم الإيصال': p.id,
+          'اسم المشارك': p.memberName,
+          'رقم الهاتف': p.memberPhone || 'غير مسجل',
+          'المبلغ المسدد (ج.م)': p.amount,
+          'تاريخ الدفع': p.paymentDate ? new Date(p.paymentDate).toLocaleDateString('ar-EG') : '-',
+          'طريقة الدفع': p.paymentMethod || 'نقدي',
+          'المسؤول عن التسجيل': p.recordedBy || 'مدير الصندوق',
+          'ملاحظات': p.notes || '-'
+        }));
+
+        // Add Summary row to Sheet 2
+        if (paymentsList.length > 0) {
+          const totalPaidPayments = paymentsList.reduce((sum, p) => sum + (p.amount || 0), 0);
+          paymentsRows.push({
+            'م': 'الإجمالي' as any,
+            'رقم الإيصال': `${paymentsList.length} دفعة` as any,
+            'اسم المشارك': '-',
+            'رقم الهاتف': '-',
+            'المبلغ المسدد (ج.م)': totalPaidPayments,
+            'تاريخ الدفع': '-',
+            'طريقة الدفع': '-',
+            'المسؤول عن التسجيل': '-',
+            'ملاحظات': '-'
+          });
+        }
+
+        // Create Workbook
+        const wb = XLSX.utils.book_new();
+
+        // Create Sheets
+        const wsMembers = XLSX.utils.json_to_sheet(membersRows);
+        const wsPayments = XLSX.utils.json_to_sheet(paymentsRows);
+
+        // Configure column widths
+        wsMembers['!cols'] = [
+          { wch: 8 },
+          { wch: 28 },
+          { wch: 16 },
+          { wch: 22 },
+          { wch: 22 },
+          { wch: 18 },
+          { wch: 18 },
+          { wch: 16 },
+          { wch: 14 },
+          { wch: 16 }
+        ];
+
+        wsPayments['!cols'] = [
+          { wch: 8 },
+          { wch: 14 },
+          { wch: 28 },
+          { wch: 16 },
+          { wch: 22 },
+          { wch: 16 },
+          { wch: 22 },
+          { wch: 22 },
+          { wch: 35 }
+        ];
+
+        // Append sheets to workbook
+        XLSX.utils.book_append_sheet(wb, wsMembers, 'المشاركون والمساهمات');
+        XLSX.utils.book_append_sheet(wb, wsPayments, 'سجل الدفعات والإيصالات');
+
+        // Write and download
+        const today = new Date().toISOString().slice(0, 10);
+        const cleanName = f.name.replace(/[/\\?%*:|"<>]/g, '_');
+        XLSX.writeFile(wb, `كشف_جمعية_${cleanName}_${today}.xlsx`);
+      },
+      error: (err) => {
+        this.exportingExcel.set(false);
+        alert('تعذر تحميل بيانات الدفعات: ' + (err.error?.message || err.message));
+      }
+    });
+  }
 }
+
